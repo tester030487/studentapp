@@ -1,0 +1,7 @@
+<aura:component controller="LCommonHelper">
+    <aura:attribute name="resultMessage" type="string"/>
+    <div>
+        <lightning:button label="Show Message" variant="brand" onclick="{!c.callApexMethod}"></lightning:button>
+        Apex Method Result is ..: <b>{!v.resultMessage}</b>
+    </div>	
+</aura:component>

@@ -1,0 +1,14 @@
+<apex:page showHeader="false">
+    <apex:includeLightning />
+
+    <div id="lightning" />
+
+    <script>
+        
+        $Lightning.use("c:SongsDisplayApp", function() {
+            $Lightning.createComponent("c:SongsDisplay","", "lightning",
+            function(cmp) {
+            });
+        });
+    </script>
+</apex:page>

@@ -1,0 +1,98 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" 
+                controller="SongsDisplayHandler">
+    <aura:attribute type="List" name="albums"/>
+    <aura:attribute type="List" name="limitedAlbum"/>
+    <aura:attribute type="List" name="songs"/>
+    <aura:attribute type="Integer" name="count"/>
+    <aura:attribute type="Object" name="songMap"/>
+    <aura:attribute type="boolean" name="showError"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <center>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <lightning:icon iconName="utility:chevronleft" style="margin-top:240px;" onclick="{!c.leftBtn}"/>
+            </div>
+            <div class="slds-col">
+                <aura:if isTrue="{!!empty(v.limitedAlbum)}">
+                    <div class="slds-p-left_large slds-p-right_large slds-p-top_xx-large">
+                        <div class="slds-box">
+                            <center style="height:380px;">
+                                <div class="slds-grid slds-gutters">
+                                    <aura:iteration items="{!v.limitedAlbum}" var="album">
+                                        <div class="slds-col">
+                                            <aura:if isTrue="{!and(!equals(album.Image__c, 'N/A'), !equals(album.Image__c, ''))}">
+                                                <img src="{!album.Image__c}" alt="{!album.Name}" style="height:300px;width:300px;" onclick="{!c.selectedAlbum}" id="{!album.Id}"/>
+                                                <!-- Display Default Image if poster not exist -->
+                                                <aura:set attribute="else">
+                                                    <img src="{!$Resource.NoImage}" alt="{!album.Name}" style="height:300px;max-width:300px;border:1px solid black;" onclick="{!c.selectedAlbum}" id="{!album.Id}"/>           
+                                                </aura:set>
+                                            </aura:if>
+                                            <br/>
+                                            <table class="slds-p-left_x-large">
+                                                <tr>
+                                                    <td style="text-align: center;"><b>Title : </b>&nbsp;{!album.Name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: center;"><b>Author : </b>&nbsp;{!album.Author__c}</td>
+                                                </tr>                                
+                                            </table>
+                                        </div>
+                                    </aura:iteration>
+                                </div>
+                                <br/>
+                                <lightning:icon iconName="utility:refresh" onclick="{!c.shuffleBtn}"/> 
+                            </center>
+                        </div>
+                    </div>
+                </aura:if>    
+            </div>
+            <div class="slds-col">
+                <lightning:icon iconName="utility:chevronright" style="margin-top:240px;" onclick="{!c.rightBtn}"/>
+            </div>        
+        </div>   
+    </center>
+    
+    <aura:if isTrue="{!!empty(v.songs)}">
+        <br/>
+        <center>
+            <button class="slds-button slds-button_success" onclick="{!c.shuffleSongs}">Shuffle</button>
+            <button class="slds-button slds-button_success" onclick="{!c.shuffleSongs}">PreviousSet</button>
+            <button class="slds-button slds-button_success" onclick="{!c.shuffleSongs}">NextSet</button>
+            <table class="slds-table" 
+                   aria-label="Example table of Opportunities with vertical borders"
+                   style="width:50%;">
+                <tbody>
+                    <aura:iteration items="{!v.songs}" var="song">
+                        <tr>
+                            <td style="width:15%">
+                                <div class="slds-wrap">
+                                    <aura:if isTrue="{!and(!equals(song.Image__c, 'N/A'), !empty(song.Image__c))}">
+                                        <img src="{!song.Image__c}" alt="{!song.Title__c}" style="height:90px;width:100px"/>
+                                        <!-- Display Default Image if poster not exist -->
+                                        <aura:set attribute="else">
+                                            <img src="{!$Resource.NoImage}" alt="{!song.Title__c}" 
+                                                 style="height:90px;max-width:100px;border:1px solid black;"/>
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-wrap">
+                                    <b>Name : </b>&nbsp; {!song.Title__c}
+                                </div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table> 
+        </center>
+    </aura:if>
+    <aura:if isTrue="{!v.showError}">
+        <br/><br/><br/><br/>
+        <center>
+            <div class="slds-text-heading_medium">No songs found.........</div>
+        </center>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,20 @@
+<template>
+   
+        <lightning-layout class="slds-m-around_medium">
+            <lightning-layout-item>
+                <lightning-vertical-navigation>            
+                    <lightning-vertical-navigation-item label="XYZ" onclick={firstLevelclick} name="recent"></lightning-vertical-navigation-item>
+                    <lightning-vertical-navigation-item label="ABC" onclick={firstLevelclick} name="created"></lightning-vertical-navigation-item>
+                    <lightning-vertical-navigation-item label="PQR" onclick={firstLevelclick} name="private"></lightning-vertical-navigation-item>
+                    <lightning-vertical-navigation-item label="DBE" onclick={firstLevelclick} name="public"></lightning-vertical-navigation-item>
+                    <lightning-vertical-navigation-item label="SAT" onclick={firstLevelclick} name="all"></lightning-vertical-navigation-item>
+                </lightning-vertical-navigation>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-m-left_medium">
+                
+                    <c-Second-Level-Dsiplay if:true={showsecondLevelDisplay}></c-Second-Level-Dsiplay>              
+                
+            </lightning-layout-item>
+        </lightning-layout>
+   
+</template>
